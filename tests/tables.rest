@@ -1,0 +1,79 @@
+### get all records from a table
+
+GET http://localhost:4444/users
+Content-Type: application/json
+
+### select a specifitc record by is
+
+GET http://localhost:4444/users/1
+Content-Type: application/json
+
+### Selsct record
+
+
+GET http://localhost:4444/steps/user_id/3
+Content-Type: application/json
+
+
+### Select records from a table where a specific field matches a value with an operatior
+
+GET http://localhost:4444/steps/step_count/gt/5000
+Content-Type: application/json
+
+### add new record to table
+
+POST http://localhost:4444/steps
+Content-Type: application/json
+
+{
+    "user_id":2,
+    "step_count":6000,
+    "date":"2026-10-12"
+}
+### UPdate a Specific record BY ID in A table
+
+PATCH  http://localhost:4444/steps/3
+Content-Type: application/json
+
+{
+    "step_count": 2500
+}
+### UPDATE RECORDS IN A TBLE WHERE A SPECIFIC FIELD MATCHES A VALUE 
+
+PATCH  http://localhost:4444/steps/userID/eq/3
+Content-Type: application/json
+
+{
+    "step_count": 3000
+}
+
+
+### update records in atble a specific find maches a value with an operation
+
+PATCH  http://localhost:4444/steps/step_count/lt/3000
+Content-Type: application/json
+
+{
+    "step_count": 3000
+}
+### Delete all records from table 
+DELETE http://localhost:4444/steps
+Content-Type: application/json
+
+
+
+### Delete a specifific record  by ID from table
+DELETE http://localhost:4444/steps/3
+Content-Type: application/json
+
+
+
+### delete  records from table a specifict field  matches a value
+
+DELETE http:/localhost:4444/steps/user_id/3
+Content-Type: application/json
+
+### Dlete recods  from a table  where a specifi matches 
+DELETE http://localhost:4444/step_count/lt/3000
+Content-Type: application/json
+
