@@ -46,6 +46,7 @@
  * Token Authentication - verifys the presence and validity of a token in the request headers for protected routes.
  * 
  */
+///require('crypto').randomBytes(32).toString('hex')
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');

@@ -1,28 +1,58 @@
+@Host =http://localhost
+
+@port =4444
+
+@server = {{Host}}:{{port}}
+
+POST {{server}}/auth/register
+Content-Type: application/json
+ 
+{
+    "name": "teszt elek",
+    "email": "tesztelek@gmail.com",
+    "password":"Titkos012345",
+    "confirm":"Titkos012345",
+    "role": "user"
+}
+ 
+###login
+ 
+POST {{server}}/auth/login
+Content-Type: application/json
+ 
+{
+    "email":"tesztelek@gmail.com",
+    "password":"Titkos012345"
+}
+
+
+
+
 ### get all records from a table
 
-GET http://localhost:4444/users
+GET {{server}}/steps
 Content-Type: application/json
 
 ### select a specifitc record by is
 
-GET http://localhost:4444/users/1
+GET {{server}}/steps/1
 Content-Type: application/json
 
 ### Selsct record
 
 
-GET http://localhost:4444/steps/user_id/3
+GET {{server}}/steps/user_id/3
 Content-Type: application/json
 
 
 ### Select records from a table where a specific field matches a value with an operatior
 
-GET http://localhost:4444/steps/step_count/gt/5000
+GET {{server}}/steps/step_count/gt/5000
 Content-Type: application/json
 
 ### add new record to table
 
-POST http://localhost:4444/steps
+POST {{server}}/steps
 Content-Type: application/json
 
 {
@@ -32,7 +62,7 @@ Content-Type: application/json
 }
 ### UPdate a Specific record BY ID in A table
 
-PATCH  http://localhost:4444/steps/3
+PATCH  {{server}}/steps/3
 Content-Type: application/json
 
 {
@@ -40,7 +70,7 @@ Content-Type: application/json
 }
 ### UPDATE RECORDS IN A TBLE WHERE A SPECIFIC FIELD MATCHES A VALUE 
 
-PATCH  http://localhost:4444/steps/userID/eq/3
+PATCH  {{Host}}/steps/userID/eq/3
 Content-Type: application/json
 
 {
@@ -50,30 +80,30 @@ Content-Type: application/json
 
 ### update records in atble a specific find maches a value with an operation
 
-PATCH  http://localhost:4444/steps/step_count/lt/3000
+PATCH  {{server}}/steps/step_count/lt/3000
 Content-Type: application/json
 
 {
     "step_count": 3000
 }
 ### Delete all records from table 
-DELETE http://localhost:4444/steps
+DELETE {{server}}/steps
 Content-Type: application/json
 
 
 
 ### Delete a specifific record  by ID from table
-DELETE http://localhost:4444/steps/3
+DELETE {{server}}/steps/3
 Content-Type: application/json
 
 
 
 ### delete  records from table a specifict field  matches a value
 
-DELETE http:/localhost:4444/steps/user_id/3
+DELETE {{server}}/steps/user_id/3
 Content-Type: application/json
 
 ### Dlete recods  from a table  where a specifi matches 
-DELETE http://localhost:4444/step_count/lt/3000
+DELETE {{server}}/step_count/lt/3000
 Content-Type: application/json
 
