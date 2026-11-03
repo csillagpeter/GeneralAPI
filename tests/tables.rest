@@ -4,6 +4,8 @@
 
 @server = {{Host}}:{{port}}
 
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzenR1c2VyIiwiaWF0IjoxNzkzNzAxMzE1LCJleHAiOjE3OTM3MDQ5MTV9.yz3JXUcKyulcv9nOUyBviJ5pzTZvVMb7Xg4zjLkkyKM
+
 POST {{server}}/auth/register
 Content-Type: application/json
  
@@ -32,6 +34,7 @@ Content-Type: application/json
 
 GET {{server}}/steps
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### select a specifitc record by is
 

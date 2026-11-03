@@ -1,10 +1,100 @@
 const express = require('express');
 const router = express.Router();
 var db = require('../utils/database')
+const { tokencheck } = require('../utils/jwt');
+
+const PUBLIC_TABLES = process.env.Public_TABLES ? process.env.Public_TABLES.split(',').map(table => table.trim()) : [];
+ 
+// public enpoints
+router.get('/public/:table', (req, res) => 
+    {
+        let table = req.params.table;
+        
+        if (!PUBLIC_TABLES.includes(table)) {
+            return res.status(403).json({error: 'Access denied to this table'});
+        }
+   
+
+    db.query(`SELECT * FROM ${table}`, (err, results) => {
+        if (err) {
+            return res.status(500).json({error: 'Database query error'});
+        }else {
+            return res.status(200).json(results);
+        }
+    })
+ })
+
+
+    // read A SPECIFIC RECORD BY ID FROM A TABLE
+router.get('/public/:table/:id', (req, res) => {
+    let table = req.params.table;
+    let id = req.params.id;
+
+    if (!PUBLIC_TABLES.includes(table)) {
+            return res.status(403).json({error: 'Access denied to this table'});
+        }
+ 
+    db.query(`SELECT * FROM ${table} WHERE ID = ?`, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({error: 'Database query error'});
+        } else {
+            return res.status(200).json({results});
+        }
+    })
+});
  
  
+// SELECT RECORDS FROM A TABLE WHERE A SPECIFIC FIELD MATCHES A VALUE
+router.get('/public/:table/:field/:value', (req, res) => {
+    let table = req.params.table;
+    let field = req.params.field;
+    let value = req.params.value;
+    if (!PUBLIC_TABLES.includes(table)) {
+            return res.status(403).json({error: 'Access denied to this table'});
+        }
+ 
+    db.query(`SELECT * FROM ${table} WHERE ${field}= ?`, [value],  (err, results) => {
+        if (err) {
+            return res.status(500).json({error: 'Database query error'});
+        } else {
+            return res.status(200).json(results);
+        }
+    })
+});
+ 
+ 
+// SELECT RECORDS FROM A TABLE WHERE A SPECIFIC FIELD MATCHES A VALUE WITH AN OPERATOR
+router.get('/public/:table/:field/:operator/:value', (req, res) => {
+    let table = req.params.table;
+    let field = req.params.field;
+    let operator = getOps(req.params.operator);
+    let value = req.params.value
+    if(operator === 'LIKE' || operator === 'NOT LIKE')
+    {
+        value = '%' + req.params.value + '%';
+    }
+    if (!PUBLIC_TABLES.includes(table)) {
+            return res.status(403).json({error: 'Access denied to this table'});
+        }
+ 
+ 
+    db.query(`SELECT * FROM ${table} WHERE ${field} ${operator} ?`, [value],  (err, results) => {
+        if (err) {
+            return res.status(500).json({error: 'Database query error'});
+        } else {
+            return res.status(200).json(results);
+        }
+    })
+});
+ 
+
+/*------------------------------------------*/ 
+// private endpoints
+/*------------------------------------------*/ 
+
+
 // SELECT ALL RECORDS FROM A TABLE
-router.get('/:table', (req, res) => {
+router.get('/:table',tokencheck, (req, res) => {
     let table = req.params.table;
  
     db.query(`SELECT * FROM ${table}`, (err, results) => {
